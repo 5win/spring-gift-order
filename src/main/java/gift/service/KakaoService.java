@@ -1,6 +1,7 @@
 package gift.service;
 
 import gift.domain.KakaoLogin;
+import gift.domain.KakaoToken;
 import gift.dto.KakaoTokenResponse;
 import gift.dto.KakaoUserInfo;
 import gift.entity.Member;
@@ -31,6 +32,7 @@ public class KakaoService {
         if (queriedMember.isEmpty()) {
             memberJpaDao.save(kakaoMember);
         }
+        KakaoToken.saveAccessToken(kakaoMember.getEmail(), kakaoToken.getAccessToken());
 
         return jwtUtil.createJwt(kakaoMember.getEmail(), 1000 * 60 * 30);
     }
